@@ -98,3 +98,55 @@ func TestHasExpiredData_Map(t *testing.T) {
 	m[3] = expirable
 	assert.True(t, gowed.HasExpiredData(m))
 }
+
+func TestHasExpiredData_UnexpiredStructWithExpiredField(t *testing.T){
+	type ExpirableStruct struct {
+		gowed.Expirer
+	}
+
+	expirable := ExpirableStruct{
+		Expirer: Expired{},
+	}
+	unexpirable := ExpirableStruct{
+		Expirer: Unexpired{},
+	}
+
+	type NestedStruct struct {
+		Field ExpirableStruct
+	}
+
+	nested := NestedStruct{
+		Field: unexpirable,
+	}
+
+	assert.False(t, gowed.HasExpiredData(nested))
+
+	nested.Field = expirable
+	assert.True(t, gowed.HasExpiredData(nested))
+}
+
+func TestHasExpiredData_ExpiredStructWithUnexpiredField(t *testing.T){
+	type ExpirableStruct struct {
+		gowed.Expirer
+	}
+
+	expirable := ExpirableStruct{
+		Expirer: Expired{},
+	}
+	unexpirable := ExpirableStruct{
+		Expirer: Unexpired{},
+	}
+
+	type NestedStruct struct {
+		Field ExpirableStruct
+	}
+
+	nested := NestedStruct{
+		Field: expirable,
+	}
+
+	assert.True(t, gowed.HasExpiredData(nested))
+
+	nested.Field = unexpirable
+	assert.False(t, gowed.HasExpiredData(nested))
+}

@@ -79,7 +79,7 @@ func TestRemoveExpiredData(t *testing.T) {
 		1: unexpirable,
 		2: expirable,
 	}
-	RemoveExpiredData(m)
+	RemoveMapExpiredData(m)
 	expected := map[int]ExpirableStruct{
 		1: unexpirable,
 	}
@@ -103,7 +103,7 @@ func TestRemoveUnexpiredData(t *testing.T) {
 		1: unexpirable,
 		2: expirable,
 	}
-	RemoveUnexpiredData(m)
+	RemoveMapUnexpiredData(m)
 	expected := map[int]ExpirableStruct{
 		2: expirable,
 	}

@@ -23,7 +23,7 @@ func ExtracMapExpiredData[K comparable, V Expirer](slice map[K]V) []V {
 }
 
 // Remove expired data in slice
-func RemoveExpiredData[K comparable, V Expirer](m map[K]V) {
+func RemoveMapExpiredData[K comparable, V Expirer](m map[K]V) {
 	for k, v := range m {
 		if v.IsExpired() {
 			delete(m, k)
@@ -32,7 +32,7 @@ func RemoveExpiredData[K comparable, V Expirer](m map[K]V) {
 }
 
 // Remove unexpired data in slice
-func RemoveUnexpiredData[K comparable, V Expirer](m map[K]V) {
+func RemoveMapUnexpiredData[K comparable, V Expirer](m map[K]V) {
 	for k, v := range m {
 		if !v.IsExpired() {
 			delete(m, k)

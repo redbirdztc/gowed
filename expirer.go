@@ -2,7 +2,6 @@ package gowed
 
 import (
 	"reflect"
-	"time"
 )
 
 // Expirer is an interface that defines the IsExpired method.

@@ -5,15 +5,15 @@ import (
 	"time"
 )
 
+// Expirer is an interface that defines the IsExpired method.
+// Types that implement this interface can be checked for expiration.
 type Expirer interface {
 	IsExpired() bool
 }
 
-type ExpiryKeeper interface {
-	TimeoutAt(time.Time)
-	Timeout() time.Time
-}
-
+// HasExpiredData checks if the given value or any of its nested values are expired.
+// It recursively traverses through arrays, slices, structs, and maps to check for expiration.
+// If the value is nil or not expirable, it returns false.
 func HasExpiredData(v any) bool {
 	if v == nil {
 		return false
